@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class ColonWidget extends StatefulWidget {
@@ -14,10 +13,11 @@ class ColonWidget extends StatefulWidget {
 class _ColonWidgetState extends State<ColonWidget> {
   late Timer timer;
   bool visible = true;
+
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 500), (_) {
       setState(() {
         visible = !visible;
       });
@@ -26,8 +26,8 @@ class _ColonWidgetState extends State<ColonWidget> {
 
   @override
   void dispose() {
-    super.dispose();
     timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -38,7 +38,7 @@ class _ColonWidgetState extends State<ColonWidget> {
       child: widget.colon ??
           Text(
             ":",
-            style: Theme.of(context).textTheme.bodySmall,
+            style: Theme.of(context).textTheme.bodySmall ?? const TextStyle(fontSize: 14),
           ),
     );
   }
