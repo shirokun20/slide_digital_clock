@@ -25,52 +25,21 @@ class DigitalClock extends StatefulWidget {
     this.amPmPosition = AmPmPosition.left,
   });
 
-  /// am or pm
   final bool? is24HourTimeFormat;
-
-  /// if you want use seconds this variable should be true
   final bool? showSecondsDigit;
-
-  /// use ":"  or create your widget
   final Widget? colon;
-  // colon area decoraiton
   final BoxDecoration? colonDecoration;
-
-  /// clock area width
   final double? areaWidth;
-
-  ///clock area height
   final double? areaHeight;
-
-  /// clock area decoration
   final BoxDecoration? areaDecoration;
-
   final AlignmentDirectional? areaAligment;
-
-  /// hour decoration
   final BoxDecoration? hourDigitDecoration;
-
-  /// minute decoration
   final BoxDecoration? minuteDigitDecoration;
-
-  /// seconds decoration
   final BoxDecoration? secondDigitDecoration;
-
-  /// animation style
   final Curve? digitAnimationStyle;
-
-  /// hour text style
   final TextStyle? hourMinuteDigitTextStyle;
-
-  /// seconds text style,
   final TextStyle? secondDigitTextStyle;
-
-  /// am-pm text style
   final TextStyle? amPmDigitTextStyle;
-
-  /// Determines the position of the AM/PM indicator relative to the time (e.g., "3:00 PM" or "PM 3:00").
-  /// You can specify [AmPmPosition.left] to place it to the left of the time or [AmPmPosition.right] for the right.
-  /// Defaults to [AmPmPosition.left] if not set.
   final AmPmPosition amPmPosition;
 
   @override
@@ -181,10 +150,8 @@ class _DigitalClockState extends State<DigitalClock> {
               text: sTOss(_clockModel.second),
               animationStyle: widget.digitAnimationStyle,
               textStyle: widget.secondDigitTextStyle ??
-                  Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(fontSize: 10)),
+                  (Theme.of(context).textTheme.bodySmall ??
+                      const TextStyle(fontSize: 10)).copyWith(fontSize: 10)),
         )
       : SizedBox();
 
@@ -196,10 +163,11 @@ class _DigitalClockState extends State<DigitalClock> {
           child: Text(
             " " + hTOhh_24hFalse(_clockModel.hour)[1],
             style: widget.amPmDigitTextStyle ??
-                Theme.of(context)
-                    .textTheme
-                    .bodySmall!
-                    .copyWith(fontSize: 10, fontWeight: FontWeight.bold),
+                (Theme.of(context).textTheme.bodySmall ??
+                    const TextStyle(fontSize: 10)).copyWith(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
         );
 }
