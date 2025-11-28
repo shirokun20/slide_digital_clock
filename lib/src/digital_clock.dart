@@ -81,33 +81,35 @@ class _DigitalClockState extends State<DigitalClock> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: SizedBox(
-        width: widget.areaWidth ?? null,
-        height: widget.areaHeight ?? null,
-        child: Container(
-          alignment: widget.areaAligment ?? AlignmentDirectional.bottomCenter,
-          decoration: widget.areaDecoration,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              if (widget.amPmPosition == AmPmPosition.left) _amPm,
-              _hour(),
-              Container(
-                alignment: AlignmentDirectional.center,
-                margin: const EdgeInsets.all(1.0),
-                padding: const EdgeInsets.all(2.0),
-                decoration: widget.colonDecoration,
-                child: ColonWidget(
-                  colon: widget.colon,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: SizedBox(
+          width: widget.areaWidth,
+          height: widget.areaHeight,
+          child: Container(
+            alignment: widget.areaAligment ?? AlignmentDirectional.bottomCenter,
+            decoration: widget.areaDecoration,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              textDirection: TextDirection.ltr,
+              children: <Widget>[
+                if (widget.amPmPosition == AmPmPosition.left) _amPm,
+                _hour(),
+                Container(
+                  alignment: AlignmentDirectional.center,
+                  margin: const EdgeInsets.all(1.0),
+                  padding: const EdgeInsets.all(2.0),
+                  decoration: widget.colonDecoration,
+                  child: ColonWidget(colon: widget.colon),
                 ),
-              ),
-              _minute,
-              _second,
-              if (widget.amPmPosition == AmPmPosition.right) _amPm,
-            ],
+                _minute,
+                _second,
+                if (widget.amPmPosition == AmPmPosition.right) _amPm,
+              ],
+            ),
           ),
         ),
       ),
@@ -115,30 +117,32 @@ class _DigitalClockState extends State<DigitalClock> {
   }
 
   Widget _hour() => Container(
-        padding: EdgeInsets.all(2),
-        alignment: AlignmentDirectional.center,
-        decoration: widget.hourDigitDecoration,
-        child: SpinnerText(
-          text: _clockModel.is24HourTimeFormat
-              ? hTOhh_24hTrue(_clockModel.hour)
-              : hTOhh_24hFalse(_clockModel.hour)[0],
-          animationStyle: widget.digitAnimationStyle,
-          textStyle: widget.hourMinuteDigitTextStyle ??
-              Theme.of(context).textTheme.bodyLarge,
-        ),
-      );
+    padding: EdgeInsets.all(2),
+    alignment: AlignmentDirectional.center,
+    decoration: widget.hourDigitDecoration,
+    child: SpinnerText(
+      text: _clockModel.is24HourTimeFormat
+          ? hTOhh_24hTrue(_clockModel.hour)
+          : hTOhh_24hFalse(_clockModel.hour)[0],
+      animationStyle: widget.digitAnimationStyle,
+      textStyle:
+          widget.hourMinuteDigitTextStyle ??
+          Theme.of(context).textTheme.bodyLarge,
+    ),
+  );
 
   Widget get _minute => Container(
-        padding: EdgeInsets.all(2),
-        alignment: AlignmentDirectional.center,
-        decoration: widget.minuteDigitDecoration,
-        child: SpinnerText(
-          text: mTOmm(_clockModel.minute),
-          animationStyle: widget.digitAnimationStyle,
-          textStyle: widget.hourMinuteDigitTextStyle ??
-              Theme.of(context).textTheme.bodyLarge,
-        ),
-      );
+    padding: EdgeInsets.all(2),
+    alignment: AlignmentDirectional.center,
+    decoration: widget.minuteDigitDecoration,
+    child: SpinnerText(
+      text: mTOmm(_clockModel.minute),
+      animationStyle: widget.digitAnimationStyle,
+      textStyle:
+          widget.hourMinuteDigitTextStyle ??
+          Theme.of(context).textTheme.bodyLarge,
+    ),
+  );
 
   Widget get _second => widget.showSecondsDigit != false
       ? Container(
@@ -147,11 +151,14 @@ class _DigitalClockState extends State<DigitalClock> {
           alignment: AlignmentDirectional.center,
           decoration: widget.secondDigitDecoration,
           child: SpinnerText(
-              text: sTOss(_clockModel.second),
-              animationStyle: widget.digitAnimationStyle,
-              textStyle: widget.secondDigitTextStyle ??
-                  (Theme.of(context).textTheme.bodySmall ??
-                      const TextStyle(fontSize: 10)).copyWith(fontSize: 10)),
+            text: sTOss(_clockModel.second),
+            animationStyle: widget.digitAnimationStyle,
+            textStyle:
+                widget.secondDigitTextStyle ??
+                (Theme.of(context).textTheme.bodySmall ??
+                        const TextStyle(fontSize: 10))
+                    .copyWith(fontSize: 10),
+          ),
         )
       : SizedBox();
 
@@ -162,12 +169,11 @@ class _DigitalClockState extends State<DigitalClock> {
           alignment: AlignmentDirectional.center,
           child: Text(
             " " + hTOhh_24hFalse(_clockModel.hour)[1],
-            style: widget.amPmDigitTextStyle ??
+            style:
+                widget.amPmDigitTextStyle ??
                 (Theme.of(context).textTheme.bodySmall ??
-                    const TextStyle(fontSize: 10)).copyWith(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                ),
+                        const TextStyle(fontSize: 10))
+                    .copyWith(fontSize: 10, fontWeight: FontWeight.bold),
           ),
         );
 }
